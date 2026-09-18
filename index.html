@@ -215,7 +215,7 @@ a.ct-link:hover .cl-v{color:#F08A6E}
 footer{padding:40px 0 50px}
 .ft{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:13.5px;color:var(--ink2)}
 .ft a{font-weight:600}.ft a:hover{color:var(--red)}
-.ft-req{margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink2);letter-spacing:.02em}
+.ft-req{margin-top:10px;font-family:'Manrope',sans-serif;font-size:13.5px;color:var(--ink2);letter-spacing:0;line-height:1.5}
 
 @media(max-width:1000px){
   .hero-grid{grid-template-columns:1fr;gap:24px}
@@ -226,21 +226,26 @@ footer{padding:40px 0 50px}
 }
 @media(max-width:900px){
   .hd-port{display:none}
-  .nav-m.port{display:block}
+  .nav-m{display:block}
 }
 @media(max-width:720px){
   nav{position:fixed;inset:70px 0 auto 0;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;gap:0;padding:10px 24px 18px;display:none;margin:0}
   nav.open{display:flex}
-  nav a{padding:13px 0;font-size:16px;border-bottom:1px solid var(--line)}
+  nav a{padding:13px 0;font-size:16px;border-bottom:1px solid var(--line);white-space:normal}
   nav a:last-child{border-bottom:none}
   #burger{display:block}
   .stats-in{grid-template-columns:1fr}
+  /* мобильная шапка: всё влезаеet и читается */
+  .hd{gap:10px;padding:0 16px}
+  .hd-right{margin-left:auto;gap:10px}
+  .logo{gap:8px}
+  .logo svg{width:30px;height:30px}
+  .logo span{font-size:11px;line-height:1.25;white-space:normal;max-width:52vw}
+  .logo small{display:none}
+  .hd-cta{padding:8px 14px;font-size:12px}
 }
 @media(max-width:560px){
   .wrap,.hero-grid,.stats{padding-left:20px;padding-right:20px}
-  .hd{padding:0 20px}
-  .logo{font-size:13px}
-  .logo small{font-size:8.5px}
   .st b{font-size:32px}
   .flow-step{grid-template-columns:52px 1fr;gap:16px}
   .flow-n{font-size:22px}
@@ -250,7 +255,11 @@ footer{padding:40px 0 50px}
   .hero-visual{min-height:320px}
   .rail .case{flex:0 0 290px}
 }
-@media(max-width:440px){ .certs-grid{grid-template-columns:1fr} .sys{grid-template-columns:1fr} }
+@media(max-width:400px){
+  .logo span{display:none}
+  .certs-grid{grid-template-columns:1fr}
+  .sys{grid-template-columns:1fr}
+}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -273,7 +282,9 @@ footer{padding:40px 0 50px}
       <a href="#workflow">Этапы</a>
       <a href="#certs">Сертификаты</a>
       <a href="#projects">Примеры работ</a>
+      <a href="#contacts">Контакты</a>
       <a class="nav-m port" href="https://bim.vc/user/NPyshnenko/" target="_blank" rel="noopener noreferrer">Портфолио BIM.VC ↗</a>
+      <a class="nav-m tel" href="tel:+79996912947">+7-999-691-29-47</a>
     </nav>
     <div class="hd-right">
       <a class="hd-cta" href="#contacts">Контакты</a>
