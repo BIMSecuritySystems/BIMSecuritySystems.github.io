@@ -112,6 +112,8 @@ h1 em{font-style:normal;color:var(--red)}
 .deliv-card li{font-size:14px;color:var(--ink2);line-height:1.5;padding-left:16px;position:relative}
 .deliv-card li::before{content:"—";position:absolute;left:0;color:var(--c)}
 .deliv-card li b{color:var(--ink);font-weight:600}
+.deliv-link{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--terra);border-bottom:1px dashed currentColor;align-self:flex-start;transition:.2s}
+.deliv-link:hover{color:var(--red);border-bottom-style:solid}
 .deliv-note{margin-top:16px;background:var(--panel);border:1px dashed var(--line2);border-radius:14px;padding:16px 20px;font-size:14px;color:var(--ink2);line-height:1.55}
 .deliv-note b{color:var(--ink)}
 
@@ -235,7 +237,7 @@ footer{padding:40px 0 50px}
   nav a:last-child{border-bottom:none}
   #burger{display:block}
   .stats-in{grid-template-columns:1fr}
-  /* мобильная шапка: всё влезаеet и читается */
+  /* мобильная шапка: всё влезает и читается */
   .hd{gap:10px;padding:0 16px}
   .hd-right{margin-left:auto;gap:10px}
   .logo{gap:8px}
@@ -379,6 +381,7 @@ footer{padding:40px 0 50px}
           <li><b>Чертежи из модели</b> — планы, разрезы, схемы и аксонометрии, выпущенные из модели</li>
           <li><b>Экспорты</b> — IFC, NWC, RVT для экспертизы и смежных разделов</li>
         </ul>
+        <a class="deliv-link" href="https://bim.vc/user/NPyshnenko/" target="_blank" rel="noopener noreferrer">Портфолио BIM.VC ↗</a>
       </div>
     </div>
     <p class="deliv-note rev"><b>Дополнительно возможно:</b> исполнительная документация и исполнительная модель по фактическому монтажу, авторский надзор в период производства работ.</p>
@@ -741,49 +744,40 @@ footer{padding:40px 0 50px}
   document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
 
   /* ============================================================
-     Лента примеров: автопрокрутка ВСЕГДА, пауза при наведении/
-     перетаскивании. Короткое нажатие без смещения = клик
-     (миниатюра переключает фото, главное фото открывает просмотр).
+     Лента примеров.
+     Автопрокрутка всегда; перетаскивание — только мышь (без
+     pointer-capture, чтобы клики по фото и миниатюрам работали
+     нативно на любых устройствах, как у сертификатов).
      ============================================================ */
   const rail = document.getElementById('rail');
-  let dir = 1, pos = 0, paused = false, dragging = false, sx = 0, resumeT = null;
-  let downTarget = null, downX = 0, downY = 0, moved = false;
+  let dir = 1, pos = 0, paused = false, dragActive = false, sx = 0, resumeT = null;
   const SPEED = .45;
   const pause = ()=>{ paused = true; clearTimeout(resumeT); };
   const resume = ()=>{ clearTimeout(resumeT); resumeT = setTimeout(()=>{ paused = false; }, 1800); };
 
   rail.addEventListener('pointerenter', pause);
-  rail.addEventListener('pointerleave', ()=>{ dragging = false; rail.classList.remove('dragging'); resume(); });
+  rail.addEventListener('pointerleave', ()=>{ resume(); });
   rail.addEventListener('pointerdown', e=>{
-    downTarget = e.target; downX = e.clientX; downY = e.clientY; moved = false;
-    if(e.pointerType !== 'mouse') return;
-    dragging = true; pause();
+    if(e.pointerType !== 'mouse') return;   /* тач не трогаем: там нативный скролл и клики */
+    dragActive = true; pause();
     sx = e.clientX; pos = rail.scrollLeft;
-    rail.setPointerCapture(e.pointerId);
+    rail.classList.add('dragging');
+    e.preventDefault();
   });
-  rail.addEventListener('pointermove', e=>{
-    if(downTarget && (Math.abs(e.clientX-downX) > 6 || Math.abs(e.clientY-downY) > 6)) moved = true;
-    if(!dragging) return;
+  addEventListener('pointermove', e=>{
+    if(!dragActive) return;
     pos = pos - (e.clientX - sx);
     sx = e.clientX;
     const max = rail.scrollWidth - rail.clientWidth;
     pos = Math.max(0, Math.min(pos, max));
     rail.scrollLeft = pos;
-    if(moved) rail.classList.add('dragging');
   });
-  rail.addEventListener('pointerup', e=>{
-    dragging = false; rail.classList.remove('dragging'); resume();
-    if(!moved && downTarget){
-      const thumb = downTarget.closest ? downTarget.closest('.case-thumbs button') : null;
-      const photo = downTarget.closest ? downTarget.closest('.case-photo img') : null;
-      if(thumb){ switchThumb(thumb); }
-      else if(photo && photo.naturalWidth >= 10){ openCasePhoto(photo); }
-    }
-    downTarget = null;
+  addEventListener('pointerup', ()=>{
+    if(!dragActive) return;
+    dragActive = false; rail.classList.remove('dragging'); resume();
   });
-  rail.addEventListener('pointercancel', ()=>{ dragging = false; rail.classList.remove('dragging'); downTarget = null; resume(); });
   rail.addEventListener('wheel', ()=>{ pause(); resume(); pos = rail.scrollLeft; }, {passive:true});
-  rail.addEventListener('scroll', ()=>{ if(!dragging && paused) pos = rail.scrollLeft; }, {passive:true});
+  rail.addEventListener('scroll', ()=>{ if(!dragActive && paused) pos = rail.scrollLeft; }, {passive:true});
   rail.addEventListener('touchstart', ()=>{ pause(); }, {passive:true});
   rail.addEventListener('touchend', ()=>{ pos = rail.scrollLeft; resume(); });
   (function tick(){
@@ -825,6 +819,14 @@ footer{padding:40px 0 50px}
     const h = img.closest('.case').querySelector('h3');
     lbOpen(img.src, img.alt, h ? h.textContent : '');
   }
+
+  /* клики по фото примеров и миниатюрам — нативные, как у сертификатов */
+  document.querySelectorAll('.case-photo img').forEach(img=>{
+    img.addEventListener('click', ()=>{ if(img.naturalWidth >= 10) openCasePhoto(img); });
+  });
+  document.querySelectorAll('.case-thumbs button').forEach(btn=>{
+    btn.addEventListener('click', ()=> switchThumb(btn));
+  });
 
   /* сертификаты */
   document.querySelectorAll('.cert').forEach(c=>{
