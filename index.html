@@ -157,8 +157,8 @@ h1 em{font-style:normal;color:var(--red)}
 .rail::-webkit-scrollbar-track, .certs-rail::-webkit-scrollbar-track{background:transparent}
 .rail::-webkit-scrollbar-thumb, .certs-rail::-webkit-scrollbar-thumb{background:var(--line2);border-radius:8px}
 
-/* примеры работ */
-.rail .case{flex:0 0 340px;border:1.5px dashed var(--line2);border-radius:20px;padding:16px;background:var(--panel);user-select:none}
+/* примеры работ: карточки крупнее */
+.rail .case{flex:0 0 400px;border:1.5px dashed var(--line2);border-radius:20px;padding:18px;background:var(--panel);user-select:none}
 .case-photo{position:relative;aspect-ratio:16/10;border:1.5px dashed var(--line2);border-radius:12px;background:var(--tint);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .case-photo span{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
 .case-photo.is-empty::after{content:"фото модели";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
@@ -169,8 +169,8 @@ h1 em{font-style:normal;color:var(--red)}
 .case-thumbs button.on{opacity:1;border-color:var(--red)}
 .case-thumbs button:hover{opacity:1}
 .case-thumbs img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.case h3{font-size:16.5px;font-weight:700;color:var(--ink);margin:12px 0 5px;line-height:1.3}
-.case p{font-size:13.5px;color:var(--ink2);line-height:1.45}
+.case h3{font-size:17.5px;font-weight:700;color:var(--ink);margin:12px 0 5px;line-height:1.3}
+.case p{font-size:14px;color:var(--ink2);line-height:1.45}
 .case p b{color:var(--ink);font-weight:600}
 
 /* сертификаты — лента: фиксированная ширина карточки, одинаковая высота */
@@ -256,7 +256,7 @@ footer{padding:40px 0 50px}
   .lb{padding:3vh 3vw}
   .lb figure,.lb img{max-width:94vw}
   .hero-visual{min-height:320px}
-  .rail .case{flex:0 0 290px}
+  .rail .case{flex:0 0 320px}
   .certs-rail .cert{flex:0 0 260px}
 }
 @media(max-width:400px){
@@ -595,14 +595,14 @@ footer{padding:40px 0 50px}
   </div>
 </section>
 
-<!-- ПРИМЕРЫ РАБОТ -->
+<!-- ПРИМЕРЫ РАБОТ: ровно четыре объекта, без пустых карточек -->
 <section class="sec" id="projects" style="padding-top:20px;padding-bottom:40px">
   <div class="wrap">
     <div class="sec-head rev" style="--c:var(--blue)">
       <span class="sec-num">05 / Примеры работ</span>
       <h2>Примеры выполненных работ</h2>
     </div>
-    <!-- Фото объектов: img/case-01-1.jpg … img/case-03-4.jpg и т.д. -->
+    <!-- Фото объектов: img/case-01-1.jpg … img/case-04-5.jpg -->
     <div class="rail rev" id="rail">
       <div class="case">
         <div class="case-photo"><img src="img/case-01-1.jpg" alt="Завод по производству комбикормов для рыб — АПТ"></div>
@@ -638,19 +638,16 @@ footer{padding:40px 0 50px}
         <p><b>Система:</b> ВПВ, СПС</p>
       </div>
       <div class="case">
-        <div class="case-photo"><span>фото модели</span></div>
-        <h3>Название объекта —</h3>
-        <p><b>Система:</b> —</p>
-      </div>
-      <div class="case">
-        <div class="case-photo"><span>фото модели</span></div>
-        <h3>Название объекта —</h3>
-        <p><b>Система:</b> —</p>
-      </div>
-      <div class="case">
-        <div class="case-photo"><span>фото модели</span></div>
-        <h3>Название объекта —</h3>
-        <p><b>Система:</b> —</p>
+        <div class="case-photo"><img src="img/case-04-1.jpg" alt="Логистический комплекс — АПТ и ВПВ"></div>
+        <div class="case-thumbs">
+          <button class="on" data-src="img/case-04-1.jpg" aria-label="Фото 1"><img src="img/case-04-1.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-04-2.jpg" aria-label="Фото 2"><img src="img/case-04-2.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-04-3.jpg" aria-label="Фото 3"><img src="img/case-04-3.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-04-4.jpg" aria-label="Фото 4"><img src="img/case-04-4.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-04-5.jpg" aria-label="Фото 5"><img src="img/case-04-5.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+        </div>
+        <h3>Логистический комплекс</h3>
+        <p><b>Система:</b> АПТ, ВПВ</p>
       </div>
     </div>
   </div>
