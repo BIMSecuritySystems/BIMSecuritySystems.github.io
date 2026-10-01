@@ -159,8 +159,9 @@ h1 em{font-style:normal;color:var(--red)}
 
 /* примеры работ */
 .rail .case{flex:0 0 340px;border:1.5px dashed var(--line2);border-radius:20px;padding:16px;background:var(--panel);user-select:none}
-.case-photo{aspect-ratio:16/10;border:1.5px dashed var(--line2);border-radius:12px;background:var(--tint);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.case-photo{position:relative;aspect-ratio:16/10;border:1.5px dashed var(--line2);border-radius:12px;background:var(--tint);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .case-photo span{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.case-photo.is-empty::after{content:"фото модели";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
 .case-photo img{width:100%;height:100%;object-fit:cover;border-radius:12px;border:none;cursor:zoom-in;transition:transform .5s cubic-bezier(.2,.6,.2,1)}
 .case-photo img:hover{transform:scale(1.04)}
 .case-thumbs{display:flex;gap:6px;margin-top:10px}
@@ -604,7 +605,7 @@ footer{padding:40px 0 50px}
     <!-- Фото объектов: img/case-01-1.jpg … img/case-03-4.jpg и т.д. -->
     <div class="rail rev" id="rail">
       <div class="case">
-        <div class="case-photo"><img src="img/case-01-1.jpg" alt="Завод по производству комбикормов для рыб — АПТ" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='"></div>
+        <div class="case-photo"><img src="img/case-01-1.jpg" alt="Завод по производству комбикормов для рыб — АПТ"></div>
         <div class="case-thumbs">
           <button class="on" data-src="img/case-01-1.jpg" aria-label="Фото 1"><img src="img/case-01-1.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
           <button data-src="img/case-01-2.jpg" aria-label="Фото 2"><img src="img/case-01-2.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
@@ -615,7 +616,7 @@ footer{padding:40px 0 50px}
         <p><b>Система:</b> АПТ</p>
       </div>
       <div class="case">
-        <div class="case-photo"><img src="img/case-02-1.jpg" alt="Производственный ангар — АПТ + ВПВ" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='"></div>
+        <div class="case-photo"><img src="img/case-02-1.jpg" alt="Производственный ангар — АПТ + ВПВ"></div>
         <div class="case-thumbs">
           <button class="on" data-src="img/case-02-1.jpg" aria-label="Фото 1"><img src="img/case-02-1.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
           <button data-src="img/case-02-2.jpg" aria-label="Фото 2"><img src="img/case-02-2.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
@@ -626,7 +627,7 @@ footer{padding:40px 0 50px}
         <p><b>Система:</b> АПТ + ВПВ</p>
       </div>
       <div class="case">
-        <div class="case-photo"><img src="img/case-03-1.jpg" alt="Шатры СГП — ВПВ и СПС" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='"></div>
+        <div class="case-photo"><img src="img/case-03-1.jpg" alt="Шатры СГП — ВПВ и СПС"></div>
         <div class="case-thumbs">
           <button class="on" data-src="img/case-03-1.jpg" aria-label="Фото 1"><img src="img/case-03-1.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
           <button data-src="img/case-03-2.jpg" aria-label="Фото 2"><img src="img/case-03-2.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
@@ -699,6 +700,8 @@ footer{padding:40px 0 50px}
 
 <script>
 (function(){
+  const GIF = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+
   document.addEventListener('click', function(e){
     const link = e.target.closest('a[href]');
     if(!link) return;
@@ -804,15 +807,20 @@ footer{padding:40px 0 50px}
   }
   function lbClose(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
 
-  document.querySelectorAll('.cert').forEach(c=>{
-    c.addEventListener('click', ()=>{
-      const img = c.querySelector('img');
-      if(!img || img.style.display==='none') return;
-      const cap = c.querySelector('figcaption span');
-      lbOpen(img.src, img.alt, cap ? cap.textContent : '');
-    });
-  });
+  /* главные фото примеров: заглушка при отсутствии файла и клик-просмотр */
   document.querySelectorAll('.case-photo img').forEach(img=>{
+    const box = img.closest('.case-photo');
+    img.addEventListener('error', ()=>{
+      if(img.dataset.fail) return;
+      img.dataset.fail = '1';
+      box.classList.add('is-empty');
+      img.src = GIF;
+    });
+    img.addEventListener('load', ()=>{
+      if(img.dataset.fail && img.src.indexOf('data:') === 0) return;
+      delete img.dataset.fail;
+      box.classList.remove('is-empty');
+    });
     img.addEventListener('click', ()=>{
       if(img.naturalWidth >= 10){
         const h = img.closest('.case').querySelector('h3');
@@ -820,14 +828,27 @@ footer{padding:40px 0 50px}
       }
     });
   });
+
+  /* миниатюры переключают главное фото */
   document.querySelectorAll('.case-thumbs button').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const caseEl = btn.closest('.case');
       const main = caseEl.querySelector('.case-photo img');
       if(!main) return;
+      delete main.dataset.fail;
       main.src = btn.dataset.src;
       caseEl.querySelectorAll('.case-thumbs button').forEach(b=> b.classList.remove('on'));
       btn.classList.add('on');
+    });
+  });
+
+  /* сертификаты */
+  document.querySelectorAll('.cert').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      const img = c.querySelector('img');
+      if(!img || img.style.display==='none') return;
+      const cap = c.querySelector('figcaption span');
+      lbOpen(img.src, img.alt, cap ? cap.textContent : '');
     });
   });
 
