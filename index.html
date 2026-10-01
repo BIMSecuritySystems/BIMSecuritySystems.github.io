@@ -72,7 +72,8 @@ h1 em{font-style:normal;color:var(--red)}
 .dash{stroke-dasharray:3 3;animation:dashmove 1.2s linear infinite}
 @keyframes dashmove{to{stroke-dashoffset:-12}}
 
-/* изображение насосной: подложка растворяется в фоне без перехода */
+/* изображение насосной: без анимации появления, чтобы смесь с фоном
+   работала с первой же отрисовки (прозрачность ломала multiply) */
 .hero-visual{position:relative;min-height:560px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .hero-visual img{
   width:100%;height:100%;object-fit:contain;
@@ -330,7 +331,8 @@ footer{padding:40px 0 50px}
         </li>
       </ul>
     </div>
-    <div class="hero-visual rev" style="transition-delay:.12s">
+    <!-- Изображение насосной станции: файл img/pump-station.png -->
+    <div class="hero-visual">
       <img src="img/pump-station.png" alt="Насосная станция пожаротушения: обвязка, запорная арматура, насосные агрегаты">
     </div>
   </div>
@@ -599,6 +601,7 @@ footer{padding:40px 0 50px}
       <span class="sec-num">05 / Примеры работ</span>
       <h2>Примеры выполненных работ</h2>
     </div>
+    <!-- Фото объектов: img/case-01-1.jpg … img/case-03-4.jpg и т.д. -->
     <div class="rail rev" id="rail">
       <div class="case">
         <div class="case-photo"><img src="img/case-01-1.jpg" alt="Завод по производству комбикормов для рыб — АПТ" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='"></div>
@@ -623,9 +626,15 @@ footer{padding:40px 0 50px}
         <p><b>Система:</b> АПТ + ВПВ</p>
       </div>
       <div class="case">
-        <div class="case-photo"><span>фото модели</span></div>
-        <h3>Название объекта —</h3>
-        <p><b>Система:</b> —</p>
+        <div class="case-photo"><img src="img/case-03-1.jpg" alt="Шатры СГП — ВПВ и СПС" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='"></div>
+        <div class="case-thumbs">
+          <button class="on" data-src="img/case-03-1.jpg" aria-label="Фото 1"><img src="img/case-03-1.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-03-2.jpg" aria-label="Фото 2"><img src="img/case-03-2.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-03-3.jpg" aria-label="Фото 3"><img src="img/case-03-3.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-03-4.jpg" aria-label="Фото 4"><img src="img/case-03-4.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+        </div>
+        <h3>Шатры СГП</h3>
+        <p><b>Система:</b> ВПВ, СПС</p>
       </div>
       <div class="case">
         <div class="case-photo"><span>фото модели</span></div>
@@ -685,7 +694,7 @@ footer{padding:40px 0 50px}
     <span>© 2026 · ИП Пышненко Н. С. · Проектирование систем противопожарной защиты</span>
     <a href="#top">Наверх ↑</a>
   </div>
-  <div class="wrap ft-req">ИП Пышненко Никита Сергеевич · ИНН 614109821284 · ОГРНИП 324619600055110 · ОГРН 324619600055110 от 11.03.2024</div>
+  <div class="wrap ft-req">ИП Пышненко Никита Сергеевич · ИНН 614109821284 · ОГРНИП 324619600055110</div>
 </footer>
 
 <script>
