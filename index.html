@@ -97,7 +97,7 @@ h1 em{font-style:normal;color:var(--red)}
 /* секции */
 .sec{padding:92px 0}
 .sec-head{margin-bottom:42px;max-width:760px}
-.sec-num{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px}
+.sec-num{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px}
 .sec-num::before{content:"";width:20px;height:2px;background:var(--c,var(--red));border-radius:2px}
 .sec-head h2{font-size:clamp(28px,3.4vw,38px);font-weight:800;letter-spacing:-.025em;line-height:1.15}
 .sec-lead{font-size:17px;color:var(--ink2);margin-top:14px;max-width:720px;line-height:1.6}
@@ -350,7 +350,7 @@ footer{padding:40px 0 50px}
 <section class="sec" id="systems" style="padding-top:36px">
   <div class="wrap">
     <div class="sec-head rev" style="--c:var(--red)">
-      <span class="sec-num">01 / Состав выдачи</span>
+      <span class="sec-num">Состав выдачи</span>
       <h2>Что получает заказчик</h2>
       <p class="sec-lead">Комплект формируется в CAD или BIM формате по заданию на проектирование и информационным требованиям заказчика (EIR). Документация разрабатывается в соответствии с действующими нормативными документами на проектируемую систему.</p>
     </div>
@@ -388,7 +388,7 @@ footer{padding:40px 0 50px}
 <section class="sec" id="workflow" style="padding-top:20px">
   <div class="wrap">
     <div class="sec-head rev" style="--c:var(--blue)">
-      <span class="sec-num">02 / Этапы проектирования</span>
+      <span class="sec-num">Этапы проектирования</span>
       <h2>Порядок выполнения работ</h2>
     </div>
     <div class="flow">
@@ -432,9 +432,9 @@ footer{padding:40px 0 50px}
 <section class="sec" id="soft" style="padding-top:20px">
   <div class="wrap">
     <div class="sec-head rev" style="--c:var(--terra)">
-      <span class="sec-num">03 / Программное обеспечение и нормативная база</span>
+      <span class="sec-num">Программное обеспечение и нормативная база</span>
       <h2>Программное обеспечение</h2>
-      <p class="sec-lead">Модель и документация выдаются в BIM или CAD среде по требованию заказчика: RVT, DWG, IFC, NWC, PDF.</p>
+      <p class="sec-lead">Модель и документация выдаются в форматах согласно требованиям к информационной модели или технического задания.</p>
     </div>
     <div class="rev">
       <div class="tools">
@@ -487,7 +487,7 @@ footer{padding:40px 0 50px}
           <b>AutoCAD</b>
         </div>
       </div>
-      <p class="chips-label">Нормативная база</p>
+      <p class="chips-label">Основные нормативные документы</p>
       <div class="chips">
         <span>123-ФЗ</span>
         <span>СП 484.1311500.2020</span>
@@ -515,7 +515,7 @@ footer{padding:40px 0 50px}
 <section class="sec" id="certs" style="padding-top:20px">
   <div class="wrap">
     <div class="sec-head rev" style="--c:var(--terra)">
-      <span class="sec-num">04 / Квалификация</span>
+      <span class="sec-num">Квалификация</span>
       <h2>Сертификаты и курсы</h2>
     </div>
     <div class="certs-rail rev" id="certsRail">
@@ -595,14 +595,14 @@ footer{padding:40px 0 50px}
   </div>
 </section>
 
-<!-- ПРИМЕРЫ РАБОТ: ровно четыре объекта, без пустых карточек -->
+<!-- ПРИМЕРЫ РАБОТ -->
 <section class="sec" id="projects" style="padding-top:20px;padding-bottom:40px">
   <div class="wrap">
     <div class="sec-head rev" style="--c:var(--blue)">
-      <span class="sec-num">05 / Примеры работ</span>
+      <span class="sec-num">Примеры работ</span>
       <h2>Примеры выполненных работ</h2>
     </div>
-    <!-- Фото объектов: img/case-01-1.jpg … img/case-04-5.jpg -->
+    <!-- Фото объектов: img/case-01-1.jpg … img/case-05-4.jpg -->
     <div class="rail rev" id="rail">
       <div class="case">
         <div class="case-photo"><img src="img/case-01-1.jpg" alt="Завод по производству комбикормов для рыб — АПТ"></div>
@@ -649,6 +649,17 @@ footer{padding:40px 0 50px}
         <h3>Логистический комплекс</h3>
         <p><b>Система:</b> АПТ, ВПВ</p>
       </div>
+      <div class="case">
+        <div class="case-photo"><img src="img/case-05-1.jpg" alt="Офисное здание — АПТ + ВПВ"></div>
+        <div class="case-thumbs">
+          <button class="on" data-src="img/case-05-1.jpg" aria-label="Фото 1"><img src="img/case-05-1.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-05-2.jpg" aria-label="Фото 2"><img src="img/case-05-2.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-05-3.jpg" aria-label="Фото 3"><img src="img/case-05-3.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+          <button data-src="img/case-05-4.jpg" aria-label="Фото 4"><img src="img/case-05-4.jpg" alt="" onerror="this.closest('button').style.display='none'"></button>
+        </div>
+        <h3>Офисное здание</h3>
+        <p><b>Система:</b> АПТ + ВПВ</p>
+      </div>
     </div>
   </div>
 </section>
@@ -693,6 +704,7 @@ footer{padding:40px 0 50px}
     <a href="#top">Наверх ↑</a>
   </div>
   <div class="wrap ft-req">ИП Пышненко Никита Сергеевич · ИНН 614109821284 · ОГРНИП 324619600055110</div>
+  <div class="wrap ft-req">Все зарегистрированные товарные знаки и логотипы принадлежат их законным владельцам и используются на сайте исключительно в информационных целях.</div>
 </footer>
 
 <script>
